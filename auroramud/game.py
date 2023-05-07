@@ -65,8 +65,7 @@ class Game:
             for row in rows:
                 if row[0]==player.name or row[3]==player.address[0]:
                     player.send("This account already exists... \n")
-                    self.server.selector.unregister(player.socket)
-                    player.socket.close()
+                    player.disconnect()
                     return
             sql = f"INSERT INTO accounts(name,password,immortle_character,address,career) VALUES('{player.name}','{player.password}',{player.immortle_character},'{player.address[0]}','{player.career}');"
             self.server.db_cursor.execute(sql)
@@ -99,9 +98,7 @@ class Game:
             player.send("logged in\n\n")
             return
         player.send("password is incorrect\n")
-        self.server.selector.unregister(player.socket)
-        player.socket.close()
-        del player
+        player.disconnect()
 
     def handle_commands(self, player, text):
         text=str(text.strip())[2:len(str(text.strip()))-1].split(" ")
@@ -114,6 +111,4 @@ class Game:
                     self.server.send(f"[OOC] {player.name}: {chat}\n")
             case "@quit":
                 player.send("You disconnect")
-                self.server.selector.unregister(player.socket)
-                player.socket.close()
-                del player
+                player.disconnect()
