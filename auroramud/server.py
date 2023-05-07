@@ -5,8 +5,8 @@ import types
 import sqlite3 as sql
 from sqlite3 import Error
 
-from . import game
-from .entities import player
+import game
+from entities import player
 
 class Server(object):
     def __init__(self, host, port):
