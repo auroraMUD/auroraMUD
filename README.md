@@ -1,6 +1,8 @@
 # auroraMUD
 a sci-fi MUD inspired by EmpireMUD
 
+-----
+## design docs
 
 -----
 ## Ideas for Aurora mud.
