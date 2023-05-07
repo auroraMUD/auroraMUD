@@ -29,3 +29,8 @@ class Player():
         """)
         self.server.db.commit()
 
+    def disconnect(self):
+        self.server.selector.unregister(self.socket)
+        self.server.connections.pop(self.socket)
+        self.socket.close()
+        del self
