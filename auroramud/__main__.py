@@ -5,17 +5,18 @@ port=6000
 
 
 def main(host, port):
+    srv=None
     if not os.path.exists("./database/"):
         os.mkdir("./database/")
     try:
-        server = server.Server(host, port)
+        srv=server.Server(host, port)
     except KeyboardInterrupt:
         os.popen('cp ./database/auroramud.db ./database/auroramud.db.backup')
-        server.db.close()
-        for i in server.connections:
-            server.connections[i].disconnect()
-        server.listener.close()
-        del server
+        srv.db.close()
+        for i in srv.connections:
+            srv.connections[i].disconnect()
+        srv.listener.close()
+        del srv
         sys.exit()
 
 
