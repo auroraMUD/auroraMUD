@@ -34,11 +34,7 @@ class Server(object):
         self.listener.setblocking(False)
 
         self.selector.register(self.listener, selectors.EVENT_READ, data=None)
-        try: self.event_loop()
-        except KeyboardInterrupt: 
-             self.selector.close()
-             self.db.close()
-             sys.exit()
+        self.event_loop()
 
     def event_loop(self):
         while True:
