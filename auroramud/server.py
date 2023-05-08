@@ -81,12 +81,11 @@ class Server(object):
 
 
     def handle_exit(self,signum, frame):
-        print("bye bye")
+        os.system('cp ./database/auroramud.db ./database/auroramud.db.backup')
         self.send("Server is restarting, please hold\n\n\n")
-        os.popen('cp ./database/auroramud.db ./database/auroramud.db.backup')
-        self.db.close()
         for i in self.connections:
             self.connections[i].disconnect()
+        self.db.close()
         self.selector.unregister(self.listener)
         self.listener.close()
         self.selector.close()
