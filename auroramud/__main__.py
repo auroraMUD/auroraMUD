@@ -15,7 +15,7 @@ def main(host, port):
     srv=server.Server(host, port)
 
 
-def handle_exit(signum, frame):
+    def handle_exit(signum, frame):
         srv.send("Server is restarting, please hold\n\n\n")
         os.popen('cp ./database/auroramud.db ./database/auroramud.db.backup')
         srv.db.close()
@@ -27,6 +27,6 @@ def handle_exit(signum, frame):
         sys.exit(0)
 
 
-signal.signal(signal.SIGTERM, handle_exit)
+    signal.signal(signal.SIGTERM, handle_exit)
 
 main(host, port)
