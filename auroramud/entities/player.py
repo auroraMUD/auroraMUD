@@ -13,7 +13,7 @@ class Player():
         self.location=""
     
     def send(self, text):
-        self.socket.send(bytearray(text, 'utf-8'))
+        self.socket.sendall(bytearray(text, 'utf-8'))
 
     def is_logged_in(self):
         return True if self.state=='logged_in' else False 
