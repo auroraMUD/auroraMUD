@@ -104,24 +104,17 @@ class Game:
         text=str(text.strip())[2:len(str(text.strip()))-1].split(" ")
         match text[0]:
             case "@who":
-                immortals=[]
-                players=[]
+                who_msg="\t\tOnline Players\n"
                 for i in self.server.connections:
                     player = self.server.connections[i]
                     if player.state!="logged_in":
                         continue
-                    if player.immortle_character: 
-                        immortals.append(player)
+                    if player.immortle_character:
+                        who_msg=who_msg+f"\t{player.name} (immortal)\n"
                     else:
-                        players.append(player)
-                immortals_msg="\t\tImmortals: \n"
-                for i in immortals:
-                    immortals_msg=f"{immortals_msg}{i.name},\n"
-                players_msg="\t\tPlayers: \n"
-                for i in players:
-                    players_msg=f"{players_msg}{i.name},\n"
-                    player.send(immortals_msg+"--------------------\n"+players_msg+"--------------------\n")
-
+                        who_msg=who_msg+f"\t{player.name}\n"
+                who_msg=f"{who_msg}\n--------------------\n\n"
+                player.send(who_msg)
             case "@ooc":
                 if not len(text)>=2:
                     player.send("You need to send an actual message, duh")
