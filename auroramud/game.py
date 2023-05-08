@@ -106,13 +106,13 @@ class Game:
             case "@who":
                 who_msg="\t\tOnline Players\n"
                 for i in self.server.connections:
-                    player = self.server.connections[i]
-                    if player.state!="logged_in":
+                    conn = self.server.connections[i]
+                    if conn.state!="logged_in":
                         continue
-                    if player.immortle_character:
-                        who_msg=who_msg+f"\t{player.name} (immortal)\n"
+                    if conn.immortle_character:
+                        who_msg=who_msg+f"\t{conn.name} (immortal)\n"
                     else:
-                        who_msg=who_msg+f"\t{player.name}\n"
+                        who_msg=who_msg+f"\t{conn.name}\n"
                 who_msg=f"{who_msg}\n--------------------\n\n"
                 player.send(who_msg)
             case "@ooc":
