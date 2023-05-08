@@ -1,4 +1,6 @@
 import sys
+import os
+import signal
 import socket
 import selectors
 import types
@@ -34,6 +36,7 @@ class Server(object):
         self.listener.setblocking(False)
 
         self.selector.register(self.listener, selectors.EVENT_READ, data=None)
+        signal.signal(signal.SIGTERM, self.handle_exit)
         self.event_loop()
 
     def event_loop(self):
@@ -74,5 +77,19 @@ class Server(object):
     def send(self,text):
         for i in self.connections:
             if self.connections[i].is_logged_in(): self.connections[i].send(text)
+
+
+
+    def handle_exit(self,signum, frame):
+        print("bye bye")
+        self.send("Server is restarting, please hold\n\n\n")
+        os.popen('cp ./database/auroramud.db ./database/auroramud.db.backup')
+        self.db.close()
+        for i in self.connections:
+            self.connections[i].disconnect()
+        self.selector.unregister(self.listener)
+        self.listener.close()
+        self.selector.close()
+        sys.exit(0)
 
 
