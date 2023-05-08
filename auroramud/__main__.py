@@ -12,6 +12,7 @@ def main(host, port):
         os.mkdir("./database/")
     
     srv = server.Server(host, port)
+    signal.signal(signal.SIGTERM, handle_exit)
 
 
 def handle_exit(signum, frame):
@@ -26,6 +27,5 @@ def handle_exit(signum, frame):
     sys.exit(0)
 
 
-signal.signal(signal.SIGTERM, handle_exit)
 
 main(host, port)
