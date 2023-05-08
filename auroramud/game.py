@@ -107,7 +107,7 @@ class Game:
                 immortals=[]
                 players=[]
                 for i in self.server.connections:
-                    player = self.connection[i]
+                    player = self.connections[i]
                     if player.state!="logged_in":
                         continue
                     if player.immortle_character: 
