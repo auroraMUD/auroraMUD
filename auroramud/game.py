@@ -103,6 +103,25 @@ class Game:
     def handle_commands(self, player, text):
         text=str(text.strip())[2:len(str(text.strip()))-1].split(" ")
         match text[0]:
+            case "@who":
+                immortals=[]
+                players=[]
+                for i in self.server.connections:
+                    player = self.connection[i]
+                    if player.state!="logged_in":
+                        continue
+                    if player.immortle_character: 
+                        immortals.append(player)
+                    else:
+                        players.append(player)
+                immortals_msg="\t\tImmortals: \n"
+                for i in immortals:
+                    immortals_msg=f"{immortals_msg}{i.name},\n"
+                players_msg="\t\tPlayers: \n"
+                for i in players:
+                    immortals_msg=f"{players_msg}{i.name},\n"
+                    player.send(immortals_msg+"--------------------\n"+players_msg+"--------------------\n")
+
             case "@ooc":
                 if not len(text)>=2:
                     player.send("You need to send an actual message, duh")
