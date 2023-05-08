@@ -16,6 +16,7 @@ def main(host, port):
 
 
 def handle_exit(signum, frame):
+    print("bye bye")
     srv.send("Server is restarting, please hold\n\n\n")
     os.popen('cp ./database/auroramud.db ./database/auroramud.db.backup')
     srv.db.close()
