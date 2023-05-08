@@ -119,7 +119,7 @@ class Game:
                     immortals_msg=f"{immortals_msg}{i.name},\n"
                 players_msg="\t\tPlayers: \n"
                 for i in players:
-                    immortals_msg=f"{players_msg}{i.name},\n"
+                    players_msg=f"{players_msg}{i.name},\n"
                     player.send(immortals_msg+"--------------------\n"+players_msg+"--------------------\n")
 
             case "@ooc":
