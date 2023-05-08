@@ -73,11 +73,19 @@ class Server(object):
                 self.game.handle_socket_state(sock, data.outb)
                 data.outb=b""
 
-    def send(self,text):
+    def send(self,text, exclude=[]):
         for i in self.connections:
-            if self.connections[i].is_logged_in(): 
+            if self.connections[i].is_logged_in() and i not in exclude: 
                 try: self.connections[i].send(text)
-                except: self.connections[i].disconnect()
+                except: 
+                    to_exclude=[]
+                    for t in self.connections:
+                        if t==i: break
+                        if t.state=="logged_in": to_exclude.append(t)
+
+                    self.connections[i].disconnect()
+                    self.send(text, exclude=to_exclude)
+                    break
 
 
 
