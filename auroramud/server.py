@@ -70,13 +70,14 @@ class Server(object):
                 sock.close()
         #if mask & selectors.EVENT_WRITE:
             if data.outb and data.outb.endswith(b"\n"):
-                sent = sock.send(data.outb)
                 self.game.handle_socket_state(sock, data.outb)
-                data.outb=data.outb[sent:]
+                data.outb=b""
 
     def send(self,text):
         for i in self.connections:
-            if self.connections[i].is_logged_in(): self.connections[i].send(text)
+            if self.connections[i].is_logged_in(): 
+                try: self.connections[i].send(text)
+                except: self.connections[i].disconnect()
 
 
 
