@@ -11,7 +11,7 @@ from entities import player
 class Server(object):
     def __init__(self, host, port):
         self.selector = selectors.DefaultSelector()
-        self.db = sql.connect(r"./auroramud.db")
+        self.db = sql.connect(r"./database/auroramud.db")
         self.db_cursor = self.db.cursor()
         self.db_cursor.execute("""CREATE TABLE IF NOT EXISTS accounts (
             name text NOT NULL,
@@ -78,6 +78,5 @@ class Server(object):
     def send(self,text):
         for i in self.connections:
             if self.connections[i].is_logged_in(): self.connections[i].send(text)
-
 
 
