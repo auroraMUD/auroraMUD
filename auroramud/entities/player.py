@@ -13,7 +13,9 @@ class Player():
         self.location=""
     
     def send(self, text):
-        self.socket.sendall(bytearray(text, 'utf-8'))
+        try: self.socket.sendall(bytearray(text, 'utf-8'))
+        except: self.disconnect()
+
 
     def is_logged_in(self):
         return True if self.state=='logged_in' else False 
@@ -30,7 +32,9 @@ class Player():
         self.server.db.commit()
 
     def disconnect(self):
-        self.server.selector.unregister(self.socket)
+        try: self.server.selector.unregister(self.socket)
+        except: pass
         self.server.connections.pop(self.socket)
-        self.socket.close()
+        try: self.socket.close()
+        except: pass
         del self

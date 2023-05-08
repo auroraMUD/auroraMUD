@@ -125,5 +125,5 @@ class Game:
                 player.send("You disconnect")
                 player.disconnect()
             case other:
-                player.send("invalid command")
+                if len(text[0])>0: player.send("invalid command")
 
