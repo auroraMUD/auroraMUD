@@ -74,18 +74,16 @@ class Server(object):
                 data.outb=b""
 
     def send(self,text, exclude=[]):
+        to_drop=[]
         for i in self.connections:
             if self.connections[i].is_logged_in() and i not in exclude: 
                 try: self.connections[i].send(text)
-                except: 
-                    to_exclude=[]
-                    for t in self.connections:
-                        if t==i: break
-                        if t.state=="logged_in": to_exclude.append(t)
+                except: to_drop.append(i)
+        for i in to_drop:
+            conn=self.connections[i]
+            self.connections.pop(i)
+            conn.disconnect()
 
-                    self.connections[i].disconnect()
-                    self.send(text, exclude=to_exclude)
-                    break
 
 
 
